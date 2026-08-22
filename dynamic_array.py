@@ -42,10 +42,42 @@ class DynamicIntArray:
     def __str__(self):
         return str(self.data[:self.size])
 
+    def remove_at(self, index):
+        """
+        Remove e retorna o elemento no índice informado, deslocando os seguintes à esquerda.
+
+        Parâmetros:
+            index (int): Índice do elemento a remover (0 <= index < size).
+
+        Retorno:
+            int: Valor removido. (Retornar o Valor Removido)
+
+        Exceções:
+            IndexError: se index estiver fora dos limites.
+
+        Detalhes:
+            - Após remover, se size <= 1/4 capacity (mínimo 2) chama _resize.
+        """
+        if index < 0 or index >= self.size:
+            raise IndexError("Indice Fora dos Limites.")
+
+        valor_removido = self.data[index]
+        for i in range(index, self.size - 1):
+            self.data[i] = self.data[i + 1]
+
+        self.size -=1
+
+        if self.size <= self.capacity // 4 and self.capacity > 2:
+            nova_capacidade = max(2, self.capacity // 2)
+            self._resize(nova_capacidade)
+        return valor_removido
+
 
 lista = DynamicIntArray()
 
-# Saída: Lista vazia!
+
+#============ SAIDAS DE TESTE ============
+
 if lista.is_empty():
     print("Lista vazia!")
 else:
@@ -53,41 +85,41 @@ else:
 
 print("Adicionando o 10;")
 lista.append(10)
-#Saída: Lista:  [10] 
 print("Lista: ", lista) 
-print("Tamanho da Lista para o usuário: ", lista.size)
-print("Tamanho real da Lista internamente: ", lista.capacity)
-print()
 
 print("Adicionando o 20;")
 lista.append(20)
-#Saída: Lista:  [10, 20] 
 print("Lista: ", lista)
-print("Tamanho da Lista para o usuário: ", lista.size)
-print("Tamanho real da Lista internamente: ", lista.capacity)
-print()
 
 print("Adicionando o 30;")
 lista.append(30)
 print("Lista: ", lista)
 print("Tamanho da Lista para o usuário: ", lista.size)
-print("Tamanho real da Lista internamente: ", lista.capacity)
-print()
-
+print("Tamanho real (capacidade) da Lista internamente: ", lista.capacity)
 
 print("Adicionando o 40;")
 lista.append(40)
 print("Lista: ", lista)
-print("Tamanho da Lista para o usuário: ", lista.size)
-print("Tamanho real da Lista internamente: ", lista.capacity)
-print()
 
 print("Adicionando o 50;")
 lista.append(50)
-# Saída: [10, 20, 30, 40, 50]   
+print("Lista: ", lista)        
+
+print("Elemento na posição 2: ", lista.get(2))    
+
+print("Trocando elemento no índice 2 para 99.")   
+lista.set(2, 99)
+print("Lista: ", lista)       
+
+
+print("Removendo elemento no indice 1 se existir.") 
+lista.remove_at(1) 
 print("Lista: ", lista)
-print("Tamanho da Lista para o usuário: ", lista.size)
-print("Tamanho real da Lista internamente: ", lista.capacity)
-print()        
 
+print("Removendo mais um elementos no indice 2.") 
+lista.remove_at(2)
+print("Lista: ", lista)
 
+print("Removendo mais um elementos no indice 0.") 
+lista.remove_at(0)
+print("Lista: ", lista)
