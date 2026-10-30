@@ -18,7 +18,7 @@ def two_sum(nums, target):
         soma = arr[left][0] + arr[right][0]
 
         if soma == target:
-            return [arr[left][1], arr[right][1]]
+            return [arr[left][1], arr[right][1]] # retorna o índice
         
         elif soma < target:
             left += 1
